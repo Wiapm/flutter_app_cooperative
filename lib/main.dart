@@ -3,12 +3,24 @@ import 'package:project_flutter/screens/chat_screen.dart';
 import 'package:project_flutter/screens/registration_screen.dart';
 import 'package:project_flutter/screens/signin_screen.dart';
 import 'screens/welcome_screen.dart';
+
 import 'package:firebase_core/firebase_core.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-
-  runApp(const MyApp());
+  try {
+    WidgetsFlutterBinding.ensureInitialized();
+    await Firebase.initializeApp(
+      options: FirebaseOptions(
+          apiKey: 'AIzaSyBPdCAUTobRNptKKeCXZbCV0YOoMl_9FRA',
+          appId: '1:750896141174:android:04ee2570479a83e5baa057',
+          messagingSenderId: '750896141174',
+          projectId: 'projet-de-cooperative'),
+    );
+    runApp(MyApp());
+    // Your code that may throw an error or exception
+  } catch (e) {
+    print('Error: $e');
+  }
 }
 
 class MyApp extends StatelessWidget {

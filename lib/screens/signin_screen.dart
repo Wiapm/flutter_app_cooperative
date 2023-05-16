@@ -1,12 +1,13 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:project_flutter/screens/chat_screen.dart';
 
 import '../widgets/my_button.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class SignInScreen extends StatefulWidget {
-static const String screenRoute = 'signin_screen';
+  static const String screenRoute = 'signin_screen';
   const SignInScreen({super.key});
 
   @override
@@ -14,6 +15,7 @@ static const String screenRoute = 'signin_screen';
 }
 
 class _SignInScreenState extends State<SignInScreen> {
+  final _auth = FirebaseAuth.instance;
   late String email;
   late String password;
   late String name;
@@ -149,12 +151,15 @@ class _SignInScreenState extends State<SignInScreen> {
                 MyButton(
                   color: Color.fromARGB(255, 75, 182, 201),
                   title: 'S`inscrire',
-                  onPressed: () {
-                    print(name);
-                    print(email);
-                    print(password);
-                    print(num);
-                    print(coop);
+                  onPressed: () async {
+                    try {
+                      final newUser =
+                          await _auth.createUserWithEmailAndPassword(
+                              email: email, password: password);
+                      Navigator.pushNamed(context, ChatScreen.screenRoute);
+                    } catch (e) {
+                      print(e);
+                    }
                   },
                 ),
               ]),

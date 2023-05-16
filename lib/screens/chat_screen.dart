@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class ChatScreen extends StatefulWidget {
   static const String screenRoute = 'chat_screen';
@@ -11,6 +12,26 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreentState extends State<ChatScreen> {
+  final _auth = FirebaseAuth.instance;
+  late User signedInUser;
+
+  void initState() {
+    super.initState();
+    getCurrentUser();
+  }
+
+  void getCurrentUser() {
+    try {
+      final user = _auth.currentUser;
+      if (user != null) {
+        signedInUser = user;
+        print(signedInUser.email);
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
