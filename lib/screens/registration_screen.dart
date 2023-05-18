@@ -3,6 +3,9 @@
 import 'package:flutter/material.dart';
 
 import '../widgets/my_button.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
+import 'chat_screen.dart';
 
 class RegistrationScreen extends StatefulWidget {
   static const String screenRoute = 'registration_screen';
@@ -13,6 +16,10 @@ class RegistrationScreen extends StatefulWidget {
 }
 
 class _RegistrationScreenState extends State<RegistrationScreen> {
+  final _auth = FirebaseAuth.instance;
+  late String email;
+  late String password;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,7 +34,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 SizedBox(height: 50),
                 TextField(
                   textAlign: TextAlign.center,
-                  onChanged: (value) {},
+                  onChanged: (value) {
+                    email = value;
+                  },
                   // ignore: prefer_const_constructors
                   decoration: InputDecoration(
                       hintText: 'Entrer votre Email',
@@ -49,7 +58,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 TextField(
                   obscureText: true,
                   textAlign: TextAlign.center,
-                  onChanged: (value) {},
+                  onChanged: (value) {
+                    password = value;
+                  },
                   // ignore: prefer_const_constructors
                   decoration: InputDecoration(
                       hintText: 'Entrer votre Mot de passe',
@@ -70,7 +81,17 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 MyButton(
                   color: Color.fromARGB(255, 244, 86, 141),
                   title: 'Se connecter',
-                  onPressed: () {},
+                  onPressed: () async {
+                    try {
+                      final User = await _auth.signInWithEmailAndPassword(
+                          email: email, password: password);
+                      if (User != null) {
+                        Navigator.pushNamed(context, ChatScreen.screenRoute);
+                      }
+                    } catch (e) {
+                      print(e);
+                    }
+                  },
                 ),
               ]),
         ));

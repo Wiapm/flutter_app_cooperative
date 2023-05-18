@@ -36,7 +36,7 @@ class _ChatScreentState extends State<ChatScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 255, 129, 196),
+        backgroundColor: Color.fromARGB(255, 68, 122, 239),
         title: Row(children: [
           Image.asset(
             'images/chat.png',
@@ -47,7 +47,7 @@ class _ChatScreentState extends State<ChatScreen> {
           ),
           Text(
             'Message me',
-            style: TextStyle(color: Colors.white),
+            style: TextStyle(color: const Color.fromARGB(255, 255, 255, 255)),
           )
         ]),
         actions: [
