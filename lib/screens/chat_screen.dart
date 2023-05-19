@@ -89,7 +89,11 @@ class _ChatScreentState extends State<ChatScreen> {
               List<Text> messageWidgets = [];
 
               if (!snapshot.hasData) {
-                // add here a spinner
+                return Center(
+                  child: CircularProgressIndicator(
+                    backgroundColor: Colors.blue,
+                  ),
+                );
               }
 
               final messages = snapshot.data!.docs;
@@ -97,12 +101,18 @@ class _ChatScreentState extends State<ChatScreen> {
               for (var message in messages) {
                 final messageText = message.get('text');
                 final messageSender = message.get('sender');
-                final messageWidget = Text('$messageText - $messageSender');
+                final messageWidget = Text(
+                  '$messageText - $messageSender',
+                  style: TextStyle(fontSize: 30),
+                );
+
                 messageWidgets.add(messageWidget);
               }
 
-              return Column(
-                children: messageWidgets,
+              return Expanded(
+                child: ListView(
+                  children: messageWidgets,
+                ),
               );
             },
           ),
