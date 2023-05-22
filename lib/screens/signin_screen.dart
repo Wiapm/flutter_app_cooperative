@@ -5,6 +5,7 @@ import 'package:project_flutter/screens/chat_screen.dart';
 
 import '../widgets/my_button.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class SignInScreen extends StatefulWidget {
   static const String screenRoute = 'signin_screen';
@@ -150,12 +151,30 @@ class _SignInScreenState extends State<SignInScreen> {
                 ),
                 MyButton(
                   color: Color.fromARGB(255, 75, 182, 201),
-                  title: 'S`inscrire',
+                  title: 'S\'inscrire',
                   onPressed: () async {
                     try {
                       final newUser =
                           await _auth.createUserWithEmailAndPassword(
-                              email: email, password: password);
+                        email: email,
+                        password: password,
+                      );
+
+                      // Save the data in Firestore
+                      // Save the data in Firestore
+                      await FirebaseFirestore.instance
+                          .collection('utilisateurs')
+                          .doc(newUser.user!.uid)
+                          .set({
+                        'id_utilisateur': newUser
+                            .user!.uid, // Ajoutez le nouvel ID utilisateur
+                        'nom_complet': name,
+                        'coopérative': coop,
+                        'numéro': num,
+                        'email': email,
+                        'password': password,
+                      });
+
                       Navigator.pushNamed(context, ChatScreen.screenRoute);
                     } catch (e) {
                       print(e);

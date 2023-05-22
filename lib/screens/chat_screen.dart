@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -11,7 +9,6 @@ late User signedInUser; // this will give us the email
 class ChatScreen extends StatefulWidget {
   static const String screenRoute = 'chat_screen';
   const ChatScreen({super.key});
-
   @override
   State<ChatScreen> createState() => _ChatScreentState();
 }
@@ -19,9 +16,7 @@ class ChatScreen extends StatefulWidget {
 class _ChatScreentState extends State<ChatScreen> {
   final messageTextController = TextEditingController();
   final _auth = FirebaseAuth.instance;
-
   String? messageText; // this will give us the message
-
   void initState() {
     super.initState();
     getCurrentUser();
@@ -45,7 +40,6 @@ class _ChatScreentState extends State<ChatScreen> {
   //   print(message.data());
   // }
   //}
-
   //void messagesStreams() async {
   // await for (var snapshot in _firestore.collection('messages').snapshots()) {
   //for (var message in snapshot.docs) {
@@ -53,7 +47,6 @@ class _ChatScreentState extends State<ChatScreen> {
   //}
   //}
   //}
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -142,14 +135,12 @@ class _ChatScreentState extends State<ChatScreen> {
 
 class MessageStreamBuilder extends StatelessWidget {
   const MessageStreamBuilder({super.key});
-
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
       stream: _firestore.collection('messages').orderBy('time').snapshots(),
       builder: (context, snapshot) {
         List<MessageLine> messageWidgets = [];
-
         if (!snapshot.hasData) {
           return Center(
             child: CircularProgressIndicator(
@@ -157,27 +148,22 @@ class MessageStreamBuilder extends StatelessWidget {
             ),
           );
         }
-
         final messages = snapshot.data!.docs;
-
         for (var message in messages) {
           final messageText = message.get('text');
+          final nom = message.get('text');
           final messageSender = message.get('sender');
           final currentUser = signedInUser.email;
-
           if (currentUser == messageSender) {
             // the code of the message from the signed in user
           }
-
           final messageWidget = MessageLine(
             sender: messageSender,
             text: messageText,
             isMe: currentUser == messageSender,
           );
-
           messageWidgets.add(messageWidget);
         }
-
         return Expanded(
           child: ListView(
             padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
@@ -194,7 +180,6 @@ class MessageLine extends StatelessWidget {
   final String? sender;
   final String? text;
   final bool isMe;
-
   @override
   Widget build(BuildContext context) {
     return Padding(
