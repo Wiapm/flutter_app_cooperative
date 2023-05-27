@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import '../widgets/my_button.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+import 'categories_screen.dart';
 import 'chat_screen.dart';
 
 class RegistrationScreen extends StatefulWidget {
@@ -113,7 +114,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                               email: email, password: password);
                           if (User != null) {
                             Navigator.pushNamed(
-                                context, ChatScreen.screenRoute);
+                                context, CategoriesScreen.screenRoute);
                           }
                         } catch (e) {
                           print(e);

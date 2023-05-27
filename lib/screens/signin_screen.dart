@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:project_flutter/screens/categories_screen.dart';
 import 'package:project_flutter/screens/chat_screen.dart';
 
 import '../widgets/my_button.dart';
@@ -175,7 +176,8 @@ class _SignInScreenState extends State<SignInScreen> {
                         'password': password,
                       });
 
-                      Navigator.pushNamed(context, ChatScreen.screenRoute);
+                      Navigator.pushNamed(
+                          context, CategoriesScreen.screenRoute);
                     } catch (e) {
                       print(e);
                     }
